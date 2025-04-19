@@ -1,28 +1,28 @@
-import { Theme } from "@radix-ui/themes";
-import { Toaster } from "sonner";
+import { JetBrains_Mono, Open_Sans } from "next/font/google";
+import { Metadata } from "next";
 
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+const fontMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
+const fontSans = Open_Sans({ subsets: ["latin"], variable: "--font-sans" });
 
-import { ThemeProvider } from "@/components/theme-provider";
+import Header from "@/components/shared/Header";
 
-import ReactQueryProvider from "@/lib/ReactQueryProvider";
-
-import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import "@/styles/globals.scss";
 
 export const metadata: Metadata = {
-  title: "Resume Analyser",
-  description: "Resume Analyser",
+  title: "Next Tiptap",
+  description: "A modern WYSIWYG rich text editor based on tiptap and shadcn ui for ReactJs/NextJs",
+  keywords: "Tiptap, WYSIWYG, Rich Text Editor, ReactJS, NextJS",
+  metadataBase: new URL(`https://next-tiptap.vercel.app`),
+  openGraph: {
+    type: "website",
+    url: `https://next-tiptap.vercel.app`,
+    title: "Next Tiptap",
+    description:
+      "A modern WYSIWYG rich text editor based on tiptap and shadcn ui for ReactJs/NextJs",
+    siteName: "Next Tiptap",
+    locale: "en_US",
+    images: "/opengraph-image.jpg",
+  },
 };
 
 export default function RootLayout({
@@ -31,14 +31,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <Theme accentColor="mint" grayColor="gray" panelBackground="solid" scaling="100%" radius="full">
-            <ReactQueryProvider>{children}</ReactQueryProvider>
-            <Toaster />
-          </Theme>
-        </ThemeProvider>
+    <html lang="en" className={`${fontMono.variable} ${fontSans.variable}`}>
+      <body>
+        <Header />
+        <main>{children}</main>
       </body>
     </html>
   );
