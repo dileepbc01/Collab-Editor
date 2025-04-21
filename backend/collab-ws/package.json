@@ -1,0 +1,24 @@
+{
+  "name": "collab-ws",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev":"bun src/index.ts",
+    "start":"bun src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@hocuspocus/server": "^2.15.2",
+    "@types/express": "^5.0.1",
+    "@types/express-ws": "^3.0.5",
+    "express": "^5.1.0",
+    "express-ws": "^5.0.2"
+  }
+}

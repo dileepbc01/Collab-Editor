@@ -24,7 +24,7 @@ import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 import { HocuspocusProvider } from "@hocuspocus/provider";
 
 const provider = new HocuspocusProvider({
-  url: "ws://127.0.0.1:1234",
+  url: process.env.NEXT_PUBLIC_COLLAB_WS_URL,
   name: "example-document-2",
 });
 
