@@ -19,6 +19,14 @@ import {
   Highlight,
   Table,
 } from "./extensions";
+import Collaboration from "@tiptap/extension-collaboration";
+import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
+import { HocuspocusProvider } from "@hocuspocus/provider";
+
+const provider = new HocuspocusProvider({
+  url: "ws://127.0.0.1:1234",
+  name: "example-document-2",
+});
 
 const ExtensionKit = [
   StarterKit.configure({
@@ -56,6 +64,10 @@ const ExtensionKit = [
   CodeBlock,
   Youtube,
   Table,
+  Collaboration.configure({ document: provider.document }),
+  CollaborationCursor.configure({
+    provider,
+  }),
 ];
 
 export default ExtensionKit;

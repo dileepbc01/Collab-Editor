@@ -207,3 +207,23 @@
     }
   }
 }
+
+
+.collaboration-cursor__caret,
+.ProseMirror-widget.collaboration-cursor__caret {
+  position: absolute;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.collaboration-cursor__label {
+  position: absolute;
+  bottom: 100%;
+  left: -1px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  border-radius: 3px 3px 3px 0;
+  padding: 0.1rem 0.3rem;
+  pointer-events: none;
+}
