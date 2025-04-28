@@ -1,0 +1,57 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: dev-user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: dev_db
+    ports:
+      - 5432:5432
+    expose:
+      - "5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data:cached
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+    ports:
+      - 5050:80
+    depends_on:
+      - postgres
+
+  # collab-server:
+  #   build:
+  #     context: ./collab-server
+  #     dockerfile: Dockerfile
+  #   working_dir: /collab-server
+  #   command: python main.py
+  #   tty: true
+  #   volumes:
+  #     - ./backend:/backend/:cached
+  #     - ./.docker/.ipython:/root/.ipython:cached
+  #   environment:
+  #     PYTHONPATH: .
+  #     DATABASE_URL: "postgresql+asyncpg://dev-user:password@postgres:5432/dev_db"
+  #   depends_on:
+  #     - "postgres"
+  #   ports:
+  #     - 8000:8000
+
+  collab-ws:
+    build:
+      context: ./collab-ws
+      dockerfile: Dockerfile
+    working_dir: /app # Match the working directory in the Dockerfile
+    tty: true
+    ports:
+      - 3000:3000 # Map the exposed port
+    depends_on:
+      - postgres # Add dependency if the service needs the database
+
+volumes:
+  db-data:
