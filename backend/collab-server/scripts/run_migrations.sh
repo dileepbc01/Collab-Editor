@@ -1,2 +1,2 @@
 #!/bin/bash
-docker compose exec backend alembic upgrade head
+docker compose exec collab-server alembic upgrade head
