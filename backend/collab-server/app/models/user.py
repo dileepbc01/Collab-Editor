@@ -1,12 +1,18 @@
-from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import types,text
-from . import Base
 
+from sqlalchemy import Column, String, DateTime
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship
+import uuid
+from . import Base
 
 class User(Base):
     __tablename__ = "user"
 
-    id: Mapped[types.UUID] = mapped_column( types.Uuid, primary_key=True, index=True,server_default=text("gen_random_uuid()") )
-    email: Mapped[str] = mapped_column(index=True, unique=True)
-    fullname: Mapped[str]
-    hashed_password: Mapped[str]
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    email = Column(String, unique=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
+    created_at = Column(DateTime, nullable=False)
+
+    # Relationships
+    workspace_teams = relationship("WorkspaceTeam", back_populates="user")
+    workspaces = relationship("Workspace", back_populates="created_by_user")
