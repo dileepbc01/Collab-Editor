@@ -1,7 +1,8 @@
+  
 FROM python:3.11.4
 
-RUN mkdir /collab-server
-WORKDIR /collab-server
+RUN mkdir /backend
+WORKDIR /backend
 
 RUN apt update && \
     apt install -y postgresql-client

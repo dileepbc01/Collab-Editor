@@ -26,17 +26,15 @@ services:
 
   collab-server:
     build:
-      context: ./collab-server
+      context: collab-server
       dockerfile: Dockerfile
-    working_dir: /collab-server
     command: python app/main.py
     tty: true
     volumes:
-      - ./backend:/backend/:cached
+      - ./collab-server:/collab-server/:cached
       - ./.docker/.ipython:/root/.ipython:cached
     environment:
       PYTHONPATH: .
-      DATABASE_URL: "postgresql+asyncpg://dev-user:password@postgres:5432/dev_db"
     depends_on:
       - "postgres"
     ports:
