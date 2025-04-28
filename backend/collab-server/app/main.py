@@ -1,15 +1,14 @@
+from fastapi import FastAPI
+
 import logging
 import sys
 from contextlib import asynccontextmanager
-
-import uvicorn
-from fastapi import FastAPI
+from app.config import settings
 
 # from app.api.routers.users import router as users_router
-# from app.config import settings
 # from app.database import sessionmanager
 
-# logging.basicConfig(stream=sys.stdout, level=logging.DEBUG if settings.log_level == "DEBUG" else logging.INFO)
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG if settings.log_level == "DEBUG" else logging.INFO)
 
 
 @asynccontextmanager
@@ -34,7 +33,3 @@ async def root():
 
 # Routers
 # app.include_router(users_router)
-
-
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", reload=True, port=8000)
