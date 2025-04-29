@@ -1,30 +1,3 @@
-# Poetry
-poetry.lock
-dist/
-build/
-*.egg-info/
-
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
 .env
+**/__pycache__/**
 .venv
-env/
-venv/
-ENV/
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
