@@ -2,7 +2,7 @@
 from contextlib import asynccontextmanager
 import uvicorn
 from fastapi import FastAPI
-
+from routers import auth
 
 
 @asynccontextmanager
@@ -23,6 +23,10 @@ app = FastAPI(lifespan=lifespan, docs_url="/api/docs")
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
+
+app.include_router(
+    auth.router,
+)   
 
 
 
