@@ -5,6 +5,7 @@ from .user import User
 from .workspace import Workspace    
 
 class WorkspaceRelation(SQLModel, table=True):
+    __tablename__ = "workspace_relation"
     id: uuid.UUID = Field(default=uuid.uuid4, primary_key=True)
     created_at: datetime = Field(default=datetime.now, nullable=False)
     user_id: uuid.UUID = Field(foreign_key="user.id", nullable=False)

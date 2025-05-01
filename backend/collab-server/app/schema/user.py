@@ -2,7 +2,6 @@ from sqlmodel import  Field, Relationship
 from app.model.user import BaseUser
 import uuid
 from typing import List
-from .workspace_relation import WorkspaceRelation
 
 class User(BaseUser, table=True):
     id: uuid.UUID = Field(default=uuid.uuid4, primary_key=True)

@@ -3,7 +3,6 @@ import uuid
 from sqlmodel import Field, Relationship
 from datetime import datetime
 from typing import List
-from .workspace_relation import WorkspaceRelation
 
 class Workspace(BaseWorkspace, table=True):
     id: uuid.UUID = Field(default=uuid.uuid4, primary_key=True)
