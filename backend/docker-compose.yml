@@ -25,6 +25,7 @@ services:
       - postgres
 
   collab-server:
+    container_name: collab-server
     build:
       context: collab-server
       dockerfile: Dockerfile
@@ -38,7 +39,8 @@ services:
     depends_on:
       - "postgres"
     ports:
-      - 8000:8000
+      - 8080:8080
+    restart: always
 
   collab-ws:
     build:
