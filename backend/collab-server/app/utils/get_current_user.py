@@ -3,7 +3,7 @@ from fastapi import Depends,HTTPException,status
 from jwt import decode, InvalidTokenError
 from app.schema import User
 from sqlmodel import select
-from app.config import settings
+from app.config.settings import settings
 from app.dependencies.database import SessionDep 
 from typing import Annotated
 
@@ -19,13 +19,13 @@ async def get_current_user(
     )
     try:
         payload = decode(token,settings.secret_key,algorithms=[settings.algorithm])
-        username: str = payload.get("sub")
-        if username is None:
+        email: str = payload.get("sub")
+        if email is None:
             raise credentials_exception
     except InvalidTokenError:
         raise credentials_exception
     
-    user = (await db.exec(select(User).where(User.username == username))).first()
+    user = (await db.exec(select(User).where(User.email == email))).first()
     if user is None:
         raise credentials_exception
     return user
