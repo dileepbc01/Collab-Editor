@@ -1,16 +1,11 @@
-'use client'
+"use client";
 
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import * as z from 'zod'
-import {
-  Card,
-  CardContent,
-  CardHeader,
- CardTitle,
-} from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -18,37 +13,56 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
+} from "@/components/ui/form";
+import { apiClient } from "@/lib/api";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const registerSchema = z
   .object({
-    name: z.string().min(2, { message: 'Name is too short' }),
-    email: z.string().email({ message: 'Invalid email' }),
-    password: z.string().min(6, { message: 'Minimum 6 characters' }),
+    name: z.string().min(2, { message: "Name is too short" }),
+    email: z.string().email({ message: "Invalid email" }),
+    password: z.string().min(6, { message: "Minimum 6 characters" }),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords do not match',
-    path: ['confirmPassword'],
-  })
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
-type RegisterSchema = z.infer<typeof registerSchema>
+type RegisterSchema = z.infer<typeof registerSchema>;
 
 export default function SignupForm() {
+  const router = useRouter();
+
   const form = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
     },
-  })
+  });
 
-  const onSubmit = (data: RegisterSchema) => {
-    console.log(data)
-    // handle registration logic
-  }
+  const { mutateAsync } = apiClient.useMutation("post", "/auth/register");
+
+  const onSubmit = async (data: RegisterSchema) => {
+    console.log(data);
+    try {
+      await mutateAsync({
+        body: {
+          email: data.email,
+          password: data.password,
+          fullname: data.name,
+        },
+      });
+      toast.success("Account created successfully");
+      router.push("/login");
+    } catch (err) {
+      toast.error("Error creating account");
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
@@ -119,5 +133,5 @@ export default function SignupForm() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

@@ -1,13 +1,7 @@
-"use client";
+import React from "react";
 
-import EditForm from "./_components/EditForm";
+const page = () => {
+  return <div>page</div>;
+};
 
-import "./style.scss";
-
-export default function EditPage() {
-  return (
-    <div className="max-w-[56rem] w-full mx-auto py-10 px-6">
-      <EditForm />
-    </div>
-  );
-}
+export default page;

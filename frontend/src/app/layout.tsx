@@ -7,6 +7,7 @@ const fontMono = JetBrains_Mono({
 });
 const fontSans = Open_Sans({ subsets: ["latin"], variable: "--font-sans" });
 
+import { Toaster } from "@/components/ui/sonner";
 import "@/styles/globals.scss";
 import { QueryProvider } from "@/lib/queryClientProvider";
 
@@ -39,6 +40,7 @@ export default function RootLayout({
         <QueryProvider>
           <main>{children}</main>
         </QueryProvider>
+        <Toaster />
       </body>
     </html>
   );
