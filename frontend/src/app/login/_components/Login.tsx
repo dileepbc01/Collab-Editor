@@ -15,6 +15,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { apiClient } from "@/lib/api";
+import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email" }),
@@ -24,7 +26,11 @@ const loginSchema = z.object({
 type LoginSchema = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
-  const { mutateAsync } = apiClient.useMutation("post", "/auth/login", {});
+  const { mutateAsync, isPending } = apiClient.useMutation(
+    "post",
+    "/auth/login",
+    {}
+  );
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -32,15 +38,15 @@ export default function LoginForm() {
       password: "",
     },
   });
+  const router = useRouter();
 
   const onSubmit = async (data: LoginSchema) => {
-    console.log(data);
     const form = new FormData();
     form.append("username", data.email);
     form.append("password", data.password);
     form.append("score", "");
     try {
-      await mutateAsync({
+      const { access_token } = await mutateAsync({
         body: {
           username: data.email,
           password: data.password,
@@ -50,6 +56,8 @@ export default function LoginForm() {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       });
+      document.cookie = `access_token=${access_token}; path=/; max-age=3600;`;
+      router.push("/dashboard");
     } catch (error) {
       console.error("Login failed:", error);
     }
@@ -91,7 +99,7 @@ export default function LoginForm() {
                 )}
               />
               <Button type="submit" className="w-full">
-                Sign In
+                {isPending ? <Loader2 className="animate-spin" /> : "Sign In"}
               </Button>
             </form>
           </Form>
