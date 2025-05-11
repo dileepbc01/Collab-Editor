@@ -14,7 +14,6 @@ services:
       - db-data:/var/lib/postgresql/data:cached
 
   pgadmin:
-    container_name: pgadmin
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
@@ -25,11 +24,11 @@ services:
       - postgres
 
   collab-server:
-    container_name: collab-server
+    container_name: collab_server
     build:
       context: collab-server
       dockerfile: Dockerfile
-    command: python app/main.py
+    command: bash -c "alembic upgrade head && python app/main.py"
     tty: true
     volumes:
       - ./collab-server:/collab-server/:cached
@@ -49,7 +48,7 @@ services:
     working_dir: /app # Match the working directory in the Dockerfile
     tty: true
     ports:
-      - 3000:3000 # Map the exposed port
+      - 3110:3110 # Map the exposed port
     depends_on:
       - postgres # Add dependency if the service needs the database
 

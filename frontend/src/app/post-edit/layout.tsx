@@ -4,6 +4,7 @@ import { Metadata } from "next";
 const fontMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
 const fontSans = Open_Sans({ subsets: ["latin"], variable: "--font-sans" });
 
+import Header from "@/components/shared/Header";
 
 import "@/styles/globals.scss";
 
@@ -32,6 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${fontMono.variable} ${fontSans.variable}`}>
       <body>
+        <Header />
         <main>{children}</main>
       </body>
     </html>

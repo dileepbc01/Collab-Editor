@@ -2,7 +2,7 @@
 from contextlib import asynccontextmanager
 import uvicorn
 from fastapi import FastAPI
-from routers import auth
+from routers import auth,workspace
 
 
 @asynccontextmanager
@@ -26,6 +26,10 @@ async def root():
 
 app.include_router(
     auth.router,
+)   
+
+app.include_router(
+    workspace.router
 )   
 
 
