@@ -2,11 +2,11 @@
 
 import { useState, useEffect, useMemo } from "react";
 
-import PostHeader from "../../components/shared/PostHeader";
-import PostToc from "../../components/shared/PostToc";
-import PostContent from "../../components/shared/PostContent";
-import PostSharing from "../../components/shared/PostSharing";
-import PostReadingProgress from "../../components/shared/PostReadingProgress";
+import PostHeader from "../../../components/shared/PostHeader";
+import PostToc from "../../../components/shared/PostToc";
+import PostContent from "../../../components/shared/PostContent";
+import PostSharing from "../../../components/shared/PostSharing";
+import PostReadingProgress from "../../../components/shared/PostReadingProgress";
 import TiptapRenderer from "@/components/TiptapRenderer/ClientRenderer";
 import Image from "next/image";
 
